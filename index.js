@@ -5,9 +5,9 @@ app.set("view engine","ejs");
 const knex = require("knex")({
  client: "mysql",
  connection: {
-  host:"yamjamdb.ctk8kygsc2eq.us-east-2.rds.amazonaws.com",
+  host:"yamjam-db.ctk8kygsc2eq.us-east-2.rds.amazonaws.com",
   user: "admin",
-  password: "Password123!",
+  password: "password",
   database:"jams",
   port: 3306,
  },
