@@ -8,7 +8,7 @@ const knex = require("knex")({
   host:"yamjam-db.ctk8kygsc2eq.us-east-2.rds.amazonaws.com",
   user: "admin",
   password: "password",
-  database:"jams",
+  database:"yamjams",
   port: 3306,
  },
 });
