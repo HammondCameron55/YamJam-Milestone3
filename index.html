@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="Shop Exotic Jams" />
+    <title>Shop Exotic Jams</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+      }
+      .navbar {
+        background-color: #F8F9FA;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+      }
+      .navbar-brand {
+        font-size: 1.5rem;
+        color: #333;
+        text-decoration: none;
+      }
+      .navbar-nav {
+        list-style: none;
+        display: flex;
+        gap: 1rem;
+        margin: 0;
+      }
+      .nav-link {
+        text-decoration: none;
+        color: #333;
+      }
+      .nav-link.active {
+        font-weight: bold;
+      }
+      .cart-btn {
+        margin-right: auto;
+        padding: 0.5rem 1rem;
+        background-color: #4F2B5E;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .header {
+        background-color: #9E7FAC;
+        color: white;
+        text-align: center;
+        padding: 5rem 0;
+      }
+      .header h1 {
+        font-size: 3rem;
+      }
+      .jam-list {
+        padding: 2rem 0;
+      }
+      .jam-row {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .jam-item {
+        background: #E9ECEF;
+        border-radius: 5px;
+        width: calc(33.333% - 1rem);
+        overflow: hidden;
+      }
+      .jam-item img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+      }
+      .jam-item h3 {
+        text-align: center;
+        padding: 0.5rem 0;
+      }
+      .footer {
+        background-color: #4F2B5E;
+        color: white;
+        text-align: center;
+        padding: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <h1>Welcome to Yam Jam</h1>
+        <p>Homemade exotic jams from our home to yours.</p>
+      </div>
+    </header>
+    <!-- Jam List Section -->
+    <section class="jam-list">
+      <div class="container">
+        <% for (let i = 0; i < aJamList.length; i++) { %>
+          <% if (i % 3 === 0) { %>
+            <div class="jam-row">
+          <% } %>
+          <div class="jam-item">
+            <img
+              src="https://jambucket531.s3.us-east-2.amazonaws.com/<%=i+1%>.jpg"
+            />
+            <h3><%= aJamList[i].jamName %></h3>
+          </div>
+          <% if ((i + 1) % 3 === 0 || i === aJamList.length - 1) { %>
+            </div>
+          <% } %>
+        <% } %>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>Copyright &copy; Yam Jam Group 2024</p>
+      </div>
+    </footer>
+  </body>
+</html>
+7:29
+Complete index.js:
+7:29
+let express = require("express");
+let app = new express();
+app.set("view engine","ejs");
+// set up database connection
+const knex = require("knex")({
+ client: "mysql",
+ connection: {
+  host:"yamjamdb.ctk8kygsc2eq.us-east-2.rds.amazonaws.com",
+  user: "admin",
+  password: "Password123!",
+  database:"jams",
+  port: 3306,
+ },
+});
+app.get("/",(req,res) => {
+ knex
+ .select()
+ .from("jam")
+ .then((result) => {
+  console.log(result);
+  res.render("index",{aJamList:result});
+ });
+});
+app.listen(3000);
